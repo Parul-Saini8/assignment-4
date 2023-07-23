@@ -1,4 +1,3 @@
-# assignment-4
 # ParulSainiChat - Chat Application
 
 ParulSainiChat is a simple chat application built using Hosted Blazor WebAssembly and SignalR. It allows users to send and receive messages in real-time.
@@ -52,6 +51,3 @@ Contributions are welcome! If you find any bugs or want to add new features, fee
 
 - The implementation of the SignalR chat application was inspired by the Microsoft SignalR tutorial.
 - Special thanks to the Blazor and SignalR communities for their contributions and support.
-
-
-

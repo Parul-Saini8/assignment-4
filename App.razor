@@ -1,0 +1,18 @@
+@inject Router router
+
+<div>
+    <ul class="nav">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/">Home</NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/chat">Chat</NavLink>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <Switch>
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+    </Switch>
+</div>

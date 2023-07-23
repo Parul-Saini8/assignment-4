@@ -1,0 +1,86 @@
+@page "/chat"
+
+<h3>ParulSainiChat</h3>
+
+<label for="username">Username:</label>
+<input id="username" @bind="username" maxlength="63" disabled="@(!isConnected)" />
+<br />
+<label for="message">Message:</label>
+<input id="message" @bind="message" disabled="@(!isConnected)" />
+<button @onclick="SendMessage" disabled="@(!isConnected)">Send</button>
+
+@if (isTyping)
+{
+    <div class="italic">@(typingUser) is typing a message...</div>
+}
+
+<div>
+    @foreach (var msg in messages)
+    {
+        <p>@msg</p>
+    }
+</div>
+
+@code {
+    private HubConnection hubConnection;
+    private List<string> messages = new List<string>();
+    private string username;
+    private string message;
+    private bool isConnected;
+    private bool isTyping;
+    private string typingUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl("/chathub")
+            .Build();
+
+        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        {
+            messages.Add($"{user}: {message}");
+            StateHasChanged();
+        });
+
+        hubConnection.On<string>("UserTyping", (user) =>
+        {
+            isTyping = true;
+            typingUser = user;
+            StateHasChanged();
+
+            // Clear typing indicator after a delay
+            Task.Delay(2000).ContinueWith(_ =>
+            {
+                isTyping = false;
+                StateHasChanged();
+            });
+        });
+
+        try
+        {
+            await hubConnection.StartAsync();
+            isConnected = true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error connecting to the hub: {ex.Message}");
+            isConnected = false;
+        }
+    }
+
+    private async Task SendMessage()
+    {
+        if (!string.IsNullOrWhiteSpace(username))
+        {
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                await hubConnection.SendAsync("SendMessage", username, message);
+                message = string.Empty;
+            }
+            else
+            {
+                await hubConnection.SendAsync("UserTyping", username);
+            }
+        }
+    }
+}
