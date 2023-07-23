@@ -1,11 +1,11 @@
 # assignment-4
-# POPOAPP - Chat Application
+# ParulSainiChat - Chat Application
 
-POPOAPP is a simple chat application built using Hosted Blazor WebAssembly and SignalR. It allows users to send and receive messages in real-time.
+ParulSainiChat is a simple chat application built using Hosted Blazor WebAssembly and SignalR. It allows users to send and receive messages in real-time.
 
 ## Getting Started
 
-Follow the steps below to set up and run the POPOAPP chat application on your local machine.
+Follow the steps below to set up and run the ParulSainiChat chat application on your local machine.
 
 ### Prerequisites
 
@@ -52,5 +52,6 @@ Contributions are welcome! If you find any bugs or want to add new features, fee
 
 - The implementation of the SignalR chat application was inspired by the Microsoft SignalR tutorial.
 - Special thanks to the Blazor and SignalR communities for their contributions and support.
+
 
 
